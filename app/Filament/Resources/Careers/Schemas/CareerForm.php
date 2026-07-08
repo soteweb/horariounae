@@ -11,8 +11,19 @@ class CareerForm
     {
         return $schema
             ->components([
-                TextInput::make('name')
+                TextInput::make('identifier')
+                    ->label('Identificador')
                     ->required(),
+                TextInput::make('name')
+                    ->label('Programa Académico')
+                    ->required(),
+                TextInput::make('description')
+                    ->label('Descripción / Subtítulo'),
+                \Filament\Forms\Components\Select::make('faculty_id')
+                    ->relationship('faculty', 'name')
+                    ->label('Facultad / Área'),
+                TextInput::make('duration')
+                    ->label('Duración'),
             ]);
     }
 }

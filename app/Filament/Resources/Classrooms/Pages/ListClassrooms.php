@@ -13,7 +13,26 @@ class ListClassrooms extends ListRecords
     protected function getHeaderActions(): array
     {
         return [
-            CreateAction::make(),
+            CreateAction::make()
+                ->label('Crear Sala')
+                ->color('warning'),
         ];
+    }
+
+    protected function getHeaderWidgets(): array
+    {
+        return [
+            \App\Filament\Resources\Classrooms\Widgets\ClassroomStatsOverview::class,
+        ];
+    }
+
+    public function getTitle(): string
+    {
+        return 'Gestión de Salas';
+    }
+
+    public function getSubheading(): ?string
+    {
+        return 'Administra y visualiza la disponibilidad de espacios físicos para actividades académicas.';
     }
 }

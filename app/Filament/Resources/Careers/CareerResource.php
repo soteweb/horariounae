@@ -5,6 +5,7 @@ namespace App\Filament\Resources\Careers;
 use App\Filament\Resources\Careers\Pages\CreateCareer;
 use App\Filament\Resources\Careers\Pages\EditCareer;
 use App\Filament\Resources\Careers\Pages\ListCareers;
+use App\Filament\Resources\Careers\RelationManagers\TimeSlotsRelationManager;
 use App\Filament\Resources\Careers\Schemas\CareerForm;
 use App\Filament\Resources\Careers\Tables\CareersTable;
 use App\Models\Career;
@@ -39,7 +40,7 @@ class CareerResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            TimeSlotsRelationManager::class,
         ];
     }
 

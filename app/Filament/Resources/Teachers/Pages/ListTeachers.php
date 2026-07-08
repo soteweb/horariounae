@@ -13,7 +13,27 @@ class ListTeachers extends ListRecords
     protected function getHeaderActions(): array
     {
         return [
-            CreateAction::make(),
+            \Filament\Actions\Action::make('export')
+                ->label('Exportar')
+                ->icon('heroicon-m-arrow-down-tray')
+                ->color('gray')
+                ->button(),
+            CreateAction::make()
+                ->label('Añadir Docente')
+                ->icon('heroicon-m-user-plus')
+                ->color('warning'),
         ];
+    }
+
+    protected function getHeaderWidgets(): array
+    {
+        return [
+            \App\Filament\Resources\Teachers\Widgets\TeacherStatsOverview::class,
+        ];
+    }
+
+    public function getTitle(): string
+    {
+        return 'Gestión de Docentes';
     }
 }

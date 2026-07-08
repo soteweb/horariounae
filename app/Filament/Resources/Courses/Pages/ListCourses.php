@@ -13,7 +13,23 @@ class ListCourses extends ListRecords
     protected function getHeaderActions(): array
     {
         return [
-            CreateAction::make(),
+            \Filament\Actions\Action::make('export')
+                ->label('Exportar')
+                ->icon('heroicon-m-arrow-down-tray')
+                ->color('gray'),
+            CreateAction::make()
+                ->label('Crear Semestre')
+                ->color('warning'),
         ];
+    }
+
+    public function getTitle(): string
+    {
+        return 'Gestión de Semestres';
+    }
+
+    public function getSubheading(): ?string
+    {
+        return 'Monitorea y organiza los periodos académicos actuales y futuros de la institución.';
     }
 }

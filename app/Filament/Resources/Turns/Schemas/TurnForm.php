@@ -12,6 +12,21 @@ class TurnForm
         return $schema
             ->components([
                 TextInput::make('name')
+                    ->label('Nombre del Turno (ej. Mañana)')
+                    ->required(),
+                \Filament\Forms\Components\TimePicker::make('start_time')
+                    ->label('Hora de Inicio')
+                    ->seconds(false),
+                \Filament\Forms\Components\TimePicker::make('end_time')
+                    ->label('Hora de Fin')
+                    ->seconds(false),
+                \Filament\Forms\Components\Select::make('status')
+                    ->label('Estado')
+                    ->options([
+                        'activo' => 'Activo',
+                        'inactivo' => 'Inactivo',
+                    ])
+                    ->default('activo')
                     ->required(),
             ]);
     }

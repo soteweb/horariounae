@@ -13,7 +13,26 @@ class ListCareers extends ListRecords
     protected function getHeaderActions(): array
     {
         return [
-            CreateAction::make(),
+            CreateAction::make()
+                ->label('Nueva Carrera')
+                ->color('warning'), // Using warning to approximate the yellow button in the mockup
         ];
+    }
+
+    protected function getHeaderWidgets(): array
+    {
+        return [
+            \App\Filament\Resources\Careers\Widgets\CareerStatsOverview::class,
+        ];
+    }
+
+    public function getTitle(): string
+    {
+        return 'Gestión Académica';
+    }
+
+    public function getSubheading(): ?string
+    {
+        return 'Configura y administra los programas de estudio vigentes para este periodo institucional.';
     }
 }

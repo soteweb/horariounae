@@ -15,10 +15,23 @@ class ClassroomsTable
         return $table
             ->columns([
                 TextColumn::make('name')
+                    ->label('NOMBRE DE LA SALA')
+                    ->description(fn (\App\Models\Classroom $record): ?string => $record->location)
+                    ->icon('heroicon-m-building-office')
                     ->searchable(),
                 TextColumn::make('capacity')
-                    ->numeric()
+                    ->label('CAPACIDAD')
+                    ->formatStateUsing(fn (string $state): string => $state . ' personas')
                     ->sortable(),
+                TextColumn::make('status')
+                    ->label('ESTADO')
+                    ->badge()
+                    ->color(fn (string $state): string => match ($state) {
+                        'disponible' => 'success',
+                        'ocupada' => 'warning',
+                        'mantenimiento' => 'gray',
+                        default => 'primary',
+                    }),
                 TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()

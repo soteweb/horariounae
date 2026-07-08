@@ -176,17 +176,17 @@
 </tr>
 </thead>
 <tbody class="divide-y divide-gray-100">
-<!-- Subject Row -->
+@foreach($schedules as $schedule)
 <tr class="hover:bg-gray-50 transition-colors">
-<td class="px-6 py-4 text-sm font-medium text-slate-600">GY11</td>
+<td class="px-6 py-4 text-sm font-medium text-slate-600">ID-{{ $schedule->id }}</td>
 <td class="px-6 py-4">
-<span class="block text-sm font-bold text-slate-900 uppercase">Dibujo y Composición I</span>
-<span class="text-[10px] text-gray-400 font-medium">LIC. DISEÑO GRÁFICO</span>
+<span class="block text-sm font-bold text-slate-900 uppercase">{{ $schedule->subject->name ?? 'N/A' }}</span>
+<span class="text-[10px] text-gray-400 font-medium">{{ $schedule->career->name ?? 'N/A' }}</span>
 </td>
-<td class="px-6 py-4 text-sm text-gray-600">Edward Hermosilla</td>
-<td class="px-6 py-4 text-sm text-center font-semibold">4</td>
+<td class="px-6 py-4 text-sm text-gray-600">{{ $schedule->teacher->name ?? 'N/A' }}</td>
+<td class="px-6 py-4 text-sm text-center font-semibold">{{ \Carbon\Carbon::parse($schedule->start_time)->format('H:i') }} - {{ \Carbon\Carbon::parse($schedule->end_time)->format('H:i') }}</td>
 <td class="px-6 py-4">
-<span class="px-2 py-1 rounded bg-slate-100 text-slate-700 text-xs font-bold border border-slate-200">Sala 21B</span>
+<span class="px-2 py-1 rounded bg-slate-100 text-slate-700 text-xs font-bold border border-slate-200">{{ $schedule->classroom->name ?? 'N/A' }}</span>
 </td>
 <td class="px-6 py-4 flex space-x-2">
 <button class="p-1 text-gray-400 hover:text-slate-900 transition-colors" title="Edit">
@@ -197,74 +197,7 @@
 </button>
 </td>
 </tr>
-<!-- Subject Row -->
-<tr class="hover:bg-gray-50 transition-colors">
-<td class="px-6 py-4 text-sm font-medium text-slate-600">GY13N</td>
-<td class="px-6 py-4">
-<span class="block text-sm font-bold text-slate-900 uppercase">Fundamentos de la Comunicación Escrita</span>
-<span class="text-[10px] text-gray-400 font-medium">NIVELACIÓN</span>
-</td>
-<td class="px-6 py-4 text-sm text-gray-600">Julia Stark</td>
-<td class="px-6 py-4 text-sm text-center font-semibold">4</td>
-<td class="px-6 py-4">
-<span class="px-2 py-1 rounded bg-slate-100 text-slate-700 text-xs font-bold border border-slate-200">Sala 21B</span>
-</td>
-<td class="px-6 py-4 flex space-x-2">
-<button class="p-1 text-gray-400 hover:text-slate-900"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg></button>
-<button class="p-1 text-gray-400 hover:text-red-600"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg></button>
-</td>
-</tr>
-<!-- Subject Row -->
-<tr class="hover:bg-gray-50 transition-colors">
-<td class="px-6 py-4 text-sm font-medium text-slate-600">GY15</td>
-<td class="px-6 py-4">
-<span class="block text-sm font-bold text-slate-900 uppercase">Dibujo Técnico</span>
-<span class="text-[10px] text-gray-400 font-medium">FACAT</span>
-</td>
-<td class="px-6 py-4 text-sm text-gray-600">Edward Hermosilla</td>
-<td class="px-6 py-4 text-sm text-center font-semibold">4</td>
-<td class="px-6 py-4">
-<span class="px-2 py-1 rounded bg-slate-100 text-slate-700 text-xs font-bold border border-slate-200">Sala 21B</span>
-</td>
-<td class="px-6 py-4 flex space-x-2">
-<button class="p-1 text-gray-400 hover:text-slate-900"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg></button>
-<button class="p-1 text-gray-400 hover:text-red-600"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg></button>
-</td>
-</tr>
-<!-- Subject Row -->
-<tr class="hover:bg-gray-50 transition-colors">
-<td class="px-6 py-4 text-sm font-medium text-slate-600">GY16N</td>
-<td class="px-6 py-4">
-<span class="block text-sm font-bold text-slate-900 uppercase">Metodología de la Investigación Científica</span>
-<span class="text-[10px] text-gray-400 font-medium">NIVELACIÓN</span>
-</td>
-<td class="px-6 py-4 text-sm text-gray-600">Mariana Novosad</td>
-<td class="px-6 py-4 text-sm text-center font-semibold">4</td>
-<td class="px-6 py-4">
-<span class="px-2 py-1 rounded bg-slate-100 text-slate-700 text-xs font-bold border border-slate-200">Sala 21B</span>
-</td>
-<td class="px-6 py-4 flex space-x-2">
-<button class="p-1 text-gray-400 hover:text-slate-900"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg></button>
-<button class="p-1 text-gray-400 hover:text-red-600"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg></button>
-</td>
-</tr>
-<!-- Subject Row -->
-<tr class="hover:bg-gray-50 transition-colors">
-<td class="px-6 py-4 text-sm font-medium text-slate-600">GY17</td>
-<td class="px-6 py-4">
-<span class="block text-sm font-bold text-slate-900 uppercase">Matemática</span>
-<span class="text-[10px] text-gray-400 font-medium">NIVELACIÓN</span>
-</td>
-<td class="px-6 py-4 text-sm text-gray-600">Lisandro Sarubbi</td>
-<td class="px-6 py-4 text-sm text-center font-semibold">4</td>
-<td class="px-6 py-4">
-<span class="px-2 py-1 rounded bg-slate-100 text-slate-700 text-xs font-bold border border-slate-200">Sala 21B</span>
-</td>
-<td class="px-6 py-4 flex space-x-2">
-<button class="p-1 text-gray-400 hover:text-slate-900"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg></button>
-<button class="p-1 text-gray-400 hover:text-red-600"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg></button>
-</td>
-</tr>
+@endforeach
 </tbody>
 <tfoot>
 <tr class="bg-gray-50 border-t border-gray-200">
@@ -275,14 +208,9 @@
 </tfoot>
 </table>
 </div>
-<!-- Pagination Placeholder -->
-<div class="px-6 py-4 border-t border-gray-200 bg-white flex items-center justify-between">
-<p class="text-xs text-gray-500 font-medium tracking-wide uppercase">Showing 5 of 5 entries</p>
-<div class="flex space-x-1">
-<button class="px-3 py-1 border border-gray-300 rounded text-xs text-gray-400 cursor-not-allowed">Previous</button>
-<button class="px-3 py-1 bg-slate-900 text-white rounded text-xs">1</button>
-<button class="px-3 py-1 border border-gray-300 rounded text-xs text-gray-400 cursor-not-allowed">Next</button>
-</div>
+<!-- Pagination -->
+<div class="px-6 py-4 border-t border-gray-200 bg-white">
+    {{ $schedules->links() }}
 </div>
 </div>
 <!-- Footer Info Section -->

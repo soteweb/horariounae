@@ -59,14 +59,7 @@
 <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
         Horarios
       </a>
-<a class="flex items-center px-4 py-3 text-slate-400 hover:bg-slate-800 hover:text-white rounded-lg transition-colors duration-200" href="/salas">
-<svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
-        Salas
-      </a>
-<a class="flex items-center px-4 py-3 text-slate-400 hover:bg-slate-800 hover:text-white rounded-lg transition-colors duration-200" href="#">
-<svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
-        Materias
-      </a>
+
 </nav>
 <div class="p-4 border-t border-slate-800">
 <div class="flex items-center space-x-3 p-2 bg-slate-800 rounded-lg">
@@ -92,7 +85,7 @@
 <h2 class="text-2xl font-bold text-slate-800">
         Horario Semanal
       </h2>
-<p class="text-sm text-slate-500">FACULTAD DE CIENCIA, ARTE Y TECNOLOGÍA — Año: 2026</p>
+<p class="text-sm text-slate-500">{{ $facultyName }} — Año: {{ date('Y') }}</p>
 </div>
 <div class="flex items-center space-x-3">
 <button class="px-4 py-2 border border-slate-200 rounded-lg text-sm font-medium hover:bg-slate-50 flex items-center">
@@ -167,28 +160,19 @@
 </tr>
 </thead>
 <tbody>
-@php
-    $timeSlots = ['18:20:00-19:05:00' => '18:20-19:05', '19:05:00-19:50:00' => '19:05-19:50', '20:00:00-20:45:00' => '20:00-20:45', '20:45:00-21:30:00' => '20:45-21:30'];
-    $days = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
-@endphp
-
 @foreach($timeSlots as $timeKey => $timeLabel)
-    @if($loop->index == 2)
+    @if($loop->index == 2 && count($timeSlots) >= 4)
         <!-- Recess Slot -->
         <tr class="border-b border-slate-200 bg-slate-100/50 h-10">
-        <td class="bg-slate-100 text-center text-[10px] font-bold text-slate-400 border-r border-slate-200">19:50-20:00</td>
-        <td class="text-center text-[10px] font-bold text-slate-400 uppercase tracking-widest" colspan="5">RECESO</td>
-        <td class="bg-slate-50/50"></td>
+        <td class="bg-slate-100 text-center text-[10px] font-bold text-slate-400 border-r border-slate-200">RECESO</td>
+        <td class="text-center text-[10px] font-bold text-slate-400 uppercase tracking-widest" colspan="6">RECESO</td>
         </tr>
     @endif
     <tr class="border-b border-slate-200 h-24">
     <td class="bg-slate-50 text-center text-xs font-medium text-slate-500 border-r border-slate-200">{{ $timeLabel }}</td>
     @foreach($days as $day)
         @php
-            list($start, $end) = explode('-', $timeKey);
-            $sch = collect($schedules)->first(function($s) use ($day, $start, $end) {
-                return $s->day_of_week == $day && $s->start_time == $start && $s->end_time == $end;
-            });
+            $sch = $grid[$timeKey][$day] ?? null;
         @endphp
         <td class="p-1 border-r border-slate-200">
         @if($sch)
@@ -223,11 +207,17 @@
 </tr>
 </thead>
 <tbody class="divide-y divide-slate-100">
-<tr><td class="py-2">GY11</td><td class="py-2">Dibujo y Composición I</td><td class="py-2 text-center">4</td></tr>
-<tr><td class="py-2">GY13N</td><td class="py-2">Fundamentos de la Comunicación Escrita (Nivelación)</td><td class="py-2 text-center">4</td></tr>
-<tr><td class="py-2">GY15</td><td class="py-2">Dibujo Técnico</td><td class="py-2 text-center">4</td></tr>
-<tr><td class="py-2">GY16N</td><td class="py-2">Metodología de la Investigación Científica (Nivelación)</td><td class="py-2 text-center">4</td></tr>
-<tr><td class="py-2">GY17</td><td class="py-2">Matemática (Nivelación)</td><td class="py-2 text-center">4</td></tr>
+@forelse($subjectsSummary as $subject)
+<tr>
+    <td class="py-2">{{ $subject['identifier'] ?? '-' }}</td>
+    <td class="py-2">{{ $subject['name'] }}</td>
+    <td class="py-2 text-center">{{ $subject['hours'] }}</td>
+</tr>
+@empty
+<tr>
+    <td class="py-2 text-center text-slate-500 italic" colspan="3">Seleccione una carrera, curso y turno para ver el resumen.</td>
+</tr>
+@endforelse
 </tbody>
 </table>
 </div>

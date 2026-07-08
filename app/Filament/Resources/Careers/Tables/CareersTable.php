@@ -14,16 +14,22 @@ class CareersTable
     {
         return $table
             ->columns([
-                TextColumn::make('name')
+                TextColumn::make('identifier')
+                    ->label('IDENTIFICADOR')
+                    ->badge()
+                    ->color('warning')
                     ->searchable(),
-                TextColumn::make('created_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                TextColumn::make('updated_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
+                TextColumn::make('name')
+                    ->label('PROGRAMA ACADÉMICO')
+                    ->description(fn (\App\Models\Career $record): ?string => $record->description)
+                    ->icon('heroicon-m-building-library')
+                    ->searchable(),
+                TextColumn::make('faculty.name')
+                    ->label('FACULTAD / ÁREA')
+                    ->searchable(),
+                TextColumn::make('duration')
+                    ->label('DURACIÓN')
+                    ->searchable(),
             ])
             ->filters([
                 //

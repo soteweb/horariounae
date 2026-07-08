@@ -14,16 +14,32 @@ class CoursesTable
     {
         return $table
             ->columns([
-                TextColumn::make('name')
+                TextColumn::make('period')
+                    ->label('SEMESTRE')
+                    ->badge()
+                    ->color('warning') // similar to the "24-I" in the screenshot
+                    ->description(fn (\App\Models\Course $record): ?string => $record->name . "\n" . $record->identifier)
                     ->searchable(),
-                TextColumn::make('created_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                TextColumn::make('updated_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
+                TextColumn::make('career.name')
+                    ->label('CARRERA')
+                    ->searchable(),
+                TextColumn::make('start_date')
+                    ->label('FECHA INICIO')
+                    ->date('d M, Y')
+                    ->sortable(),
+                TextColumn::make('end_date')
+                    ->label('FECHA FIN')
+                    ->date('d M, Y')
+                    ->sortable(),
+                TextColumn::make('status')
+                    ->label('ESTADO')
+                    ->badge()
+                    ->color(fn (string $state): string => match ($state) {
+                        'activo' => 'success',
+                        'planificado' => 'gray',
+                        'finalizado' => 'dark',
+                        default => 'primary',
+                    }),
             ])
             ->filters([
                 //

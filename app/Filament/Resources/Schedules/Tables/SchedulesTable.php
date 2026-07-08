@@ -14,43 +14,65 @@ class SchedulesTable
     {
         return $table
             ->columns([
-                TextColumn::make('career_id')
-                    ->numeric()
+                TextColumn::make('career.name')
+                    ->label('CARRERA')
+                    ->searchable()
                     ->sortable(),
-                TextColumn::make('course_id')
-                    ->numeric()
+                TextColumn::make('course.name')
+                    ->label('CURSO')
+                    ->searchable()
                     ->sortable(),
-                TextColumn::make('turn_id')
-                    ->numeric()
+                TextColumn::make('turn.name')
+                    ->label('TURNO')
+                    ->badge()
+                    ->color('warning')
+                    ->searchable()
                     ->sortable(),
-                TextColumn::make('teacher_id')
-                    ->numeric()
-                    ->sortable(),
-                TextColumn::make('subject_id')
-                    ->numeric()
-                    ->sortable(),
-                TextColumn::make('classroom_id')
-                    ->numeric()
-                    ->sortable(),
+                TextColumn::make('subject.name')
+                    ->label('MATERIA')
+                    ->searchable(),
+                TextColumn::make('teacher.name')
+                    ->label('DOCENTE')
+                    ->searchable(),
+                TextColumn::make('classroom.name')
+                    ->label('AULA')
+                    ->searchable(),
                 TextColumn::make('day_of_week')
+                    ->label('DÍA')
                     ->searchable(),
                 TextColumn::make('start_time')
-                    ->time()
+                    ->label('INICIO')
+                    ->time('H:i')
                     ->sortable(),
                 TextColumn::make('end_time')
-                    ->time()
+                    ->label('FIN')
+                    ->time('H:i')
                     ->sortable(),
-                TextColumn::make('created_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                TextColumn::make('updated_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
+                TextColumn::make('status')
+                    ->label('ESTADO')
+                    ->badge()
+                    ->color(fn (string $state): string => match ($state) {
+                        'en curso' => 'warning',
+                        'programado' => 'gray',
+                        'cancelado' => 'danger',
+                        default => 'primary',
+                    }),
             ])
             ->filters([
-                //
+                \Filament\Tables\Filters\SelectFilter::make('career_id')
+                    ->label('Carrera')
+                    ->relationship('career', 'name'),
+                \Filament\Tables\Filters\SelectFilter::make('day_of_week')
+                    ->label('Día')
+                    ->options([
+                        'Lunes' => 'Lunes',
+                        'Martes' => 'Martes',
+                        'Miércoles' => 'Miércoles',
+                        'Jueves' => 'Jueves',
+                        'Viernes' => 'Viernes',
+                        'Sábado' => 'Sábado',
+                        'Domingo' => 'Domingo',
+                    ]),
             ])
             ->recordActions([
                 EditAction::make(),

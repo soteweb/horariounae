@@ -13,7 +13,26 @@ class ListTurns extends ListRecords
     protected function getHeaderActions(): array
     {
         return [
-            CreateAction::make(),
+            CreateAction::make()
+                ->label('+ Nuevo Turno')
+                ->color('warning'),
         ];
+    }
+
+    protected function getHeaderWidgets(): array
+    {
+        return [
+            \App\Filament\Resources\Turns\Widgets\TurnStatsOverview::class,
+        ];
+    }
+
+    public function getTitle(): string
+    {
+        return 'Gestión de Turnos';
+    }
+
+    public function getSubheading(): ?string
+    {
+        return 'Configura y administra los horarios rotativos de la institución.';
     }
 }
