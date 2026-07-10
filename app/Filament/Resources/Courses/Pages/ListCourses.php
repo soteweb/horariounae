@@ -18,8 +18,7 @@ class ListCourses extends ListRecords
                 ->icon('heroicon-m-arrow-down-tray')
                 ->color('gray'),
             CreateAction::make()
-                ->label('Crear Semestre')
-                ->color('warning'),
+                ->label('Nuevo Semestre'),
         ];
     }
 

@@ -21,6 +21,7 @@ class CourseResource extends Resource
     protected static ?string $modelLabel = 'Curso';
     protected static ?string $pluralModelLabel = 'Cursos';
     protected static ?string $navigationLabel = 'Semestres/Cursos';
+    protected static \UnitEnum|string|null $navigationGroup = 'Académico';
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
 

@@ -21,6 +21,7 @@ class SubjectResource extends Resource
     protected static ?string $modelLabel = 'Materia';
     protected static ?string $pluralModelLabel = 'Materias';
     protected static ?string $navigationLabel = 'Materias';
+    protected static \UnitEnum|string|null $navigationGroup = 'Académico';
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
 

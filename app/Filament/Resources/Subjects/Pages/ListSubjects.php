@@ -14,8 +14,7 @@ class ListSubjects extends ListRecords
     {
         return [
             CreateAction::make()
-                ->label('+ Nuevo Registro')
-                ->color('warning'),
+                ->label('Nueva Materia'),
         ];
     }
 

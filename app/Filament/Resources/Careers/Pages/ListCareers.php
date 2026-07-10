@@ -14,8 +14,7 @@ class ListCareers extends ListRecords
     {
         return [
             CreateAction::make()
-                ->label('Nueva Carrera')
-                ->color('warning'), // Using warning to approximate the yellow button in the mockup
+                ->label('Nueva Carrera'),
         ];
     }
 

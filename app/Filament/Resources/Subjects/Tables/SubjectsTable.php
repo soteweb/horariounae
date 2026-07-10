@@ -22,17 +22,22 @@ class SubjectsTable
                     ->searchable(),
                 TextColumn::make('identifier')
                     ->label('CÓDIGO')
+                    ->default('-')
                     ->searchable(),
                 TextColumn::make('hours')
                     ->label('HORAS SEM.')
+                    ->default('-')
+                    ->alignCenter()
                     ->formatStateUsing(fn (\App\Models\Subject $record): string => $record->hours . 'h ' . $record->modality)
                     ->sortable(),
                 TextColumn::make('faculty')
                     ->label('FACULTAD')
+                    ->default('-')
                     ->searchable(),
                 TextColumn::make('status')
                     ->label('ESTADO')
                     ->badge()
+                    ->alignCenter()
                     ->color(fn (string $state): string => match (strtolower($state)) {
                         'activa' => 'success',
                         'en revisión' => 'warning',

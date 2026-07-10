@@ -21,6 +21,7 @@ class ScheduleResource extends Resource
     protected static ?string $modelLabel = 'Horario';
     protected static ?string $pluralModelLabel = 'Horarios';
     protected static ?string $navigationLabel = 'Horarios';
+    protected static \UnitEnum|string|null $navigationGroup = 'Planificación';
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
 

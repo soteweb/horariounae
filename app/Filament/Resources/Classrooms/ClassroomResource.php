@@ -21,6 +21,7 @@ class ClassroomResource extends Resource
     protected static ?string $modelLabel = 'Sala';
     protected static ?string $pluralModelLabel = 'Salas';
     protected static ?string $navigationLabel = 'Salas';
+    protected static \UnitEnum|string|null $navigationGroup = 'Recursos';
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
 

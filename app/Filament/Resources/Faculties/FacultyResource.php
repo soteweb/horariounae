@@ -21,6 +21,7 @@ class FacultyResource extends Resource
     protected static ?string $modelLabel = 'Facultad';
     protected static ?string $pluralModelLabel = 'Facultades';
     protected static ?string $navigationLabel = 'Facultades';
+    protected static \UnitEnum|string|null $navigationGroup = 'Académico';
     
     protected static ?int $navigationSort = 2; // Coloca debajo de Carreras o al inicio
 

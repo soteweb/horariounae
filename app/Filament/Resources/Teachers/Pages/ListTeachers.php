@@ -19,9 +19,8 @@ class ListTeachers extends ListRecords
                 ->color('gray')
                 ->button(),
             CreateAction::make()
-                ->label('Añadir Docente')
-                ->icon('heroicon-m-user-plus')
-                ->color('warning'),
+                ->label('Nuevo Docente')
+                ->icon('heroicon-m-user-plus'),
         ];
     }
 

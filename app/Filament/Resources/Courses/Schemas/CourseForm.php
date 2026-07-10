@@ -12,8 +12,10 @@ class CourseForm
         return $schema
             ->components([
                 TextInput::make('name')
-                    ->label('Nombre (ej. 2024 - Primer Semestre)')
+                    ->label('Curso (ej. Primer Curso)')
                     ->required(),
+                TextInput::make('period')
+                    ->label('Semestre (ej. Primer Semestre, Segundo Semestre)'),
                 TextInput::make('identifier')
                     ->label('Código Institucional (ej. CAE-XMM-20241)'),
                 \Filament\Forms\Components\Select::make('career_id')
@@ -21,6 +23,10 @@ class CourseForm
                     ->relationship('career', 'name')
                     ->searchable()
                     ->preload(),
+                \Filament\Forms\Components\DatePicker::make('start_date')
+                    ->label('Fecha de Inicio'),
+                \Filament\Forms\Components\DatePicker::make('end_date')
+                    ->label('Fecha de Fin'),
                 \Filament\Forms\Components\Select::make('status')
                     ->label('Estado')
                     ->options([

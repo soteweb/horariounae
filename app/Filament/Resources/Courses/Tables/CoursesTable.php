@@ -14,22 +14,25 @@ class CoursesTable
     {
         return $table
             ->columns([
-                TextColumn::make('period')
-                    ->label('SEMESTRE')
+                TextColumn::make('name')
+                    ->label('SEMESTRE / CURSO')
                     ->badge()
                     ->color('warning') // similar to the "24-I" in the screenshot
-                    ->description(fn (\App\Models\Course $record): ?string => $record->name . "\n" . $record->identifier)
+                    ->description(fn (\App\Models\Course $record): ?string => trim($record->period . "\n" . $record->identifier))
                     ->searchable(),
                 TextColumn::make('career.name')
                     ->label('CARRERA')
+                    ->default('-')
                     ->searchable(),
                 TextColumn::make('start_date')
                     ->label('FECHA INICIO')
                     ->date('d M, Y')
+                    ->placeholder('-')
                     ->sortable(),
                 TextColumn::make('end_date')
                     ->label('FECHA FIN')
                     ->date('d M, Y')
+                    ->placeholder('-')
                     ->sortable(),
                 TextColumn::make('status')
                     ->label('ESTADO')

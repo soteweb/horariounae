@@ -21,6 +21,7 @@ class TurnResource extends Resource
     protected static ?string $modelLabel = 'Turno';
     protected static ?string $pluralModelLabel = 'Turnos';
     protected static ?string $navigationLabel = 'Turnos';
+    protected static \UnitEnum|string|null $navigationGroup = 'Recursos';
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
 

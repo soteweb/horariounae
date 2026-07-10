@@ -18,8 +18,7 @@ class ListSchedules extends ListRecords
                 ->icon('heroicon-m-arrow-down-tray')
                 ->color('gray'),
             CreateAction::make()
-                ->label('Crear Horario')
-                ->color('warning'),
+                ->label('Nuevo Horario'),
         ];
     }
 

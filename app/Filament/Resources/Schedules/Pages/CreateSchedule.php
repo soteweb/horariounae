@@ -8,4 +8,14 @@ use Filament\Resources\Pages\CreateRecord;
 class CreateSchedule extends CreateRecord
 {
     protected static string $resource = ScheduleResource::class;
+
+    protected function getRedirectUrl(): string
+    {
+        return $this->getResource()::getUrl('index');
+    }
+
+    protected function getCreatedNotificationTitle(): ?string
+    {
+        return 'Horario creado exitosamente';
+    }
 }

@@ -22,6 +22,7 @@ class CareerResource extends Resource
     protected static ?string $modelLabel = 'Carrera';
     protected static ?string $pluralModelLabel = 'Carreras';
     protected static ?string $navigationLabel = 'Carreras';
+    protected static \UnitEnum|string|null $navigationGroup = 'Académico';
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
 

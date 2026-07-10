@@ -14,8 +14,7 @@ class ListTurns extends ListRecords
     {
         return [
             CreateAction::make()
-                ->label('+ Nuevo Turno')
-                ->color('warning'),
+                ->label('Nuevo Turno'),
         ];
     }
 

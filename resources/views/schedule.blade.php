@@ -32,13 +32,127 @@
 
     /* Imprimir styling */
     @media print {
-      .no-print {
+      aside, header, .no-print {
         display: none !important;
       }
       .main-content {
         margin: 0 !important;
         padding: 0 !important;
       }
+      @page { size: A4 landscape; margin: 10mm; }
+      body { background: white !important; }
+    }
+
+    /* ---------------- HEADER INSTITUCIONAL ---------------- */
+    .inst-header {
+        text-align: center;
+        margin-bottom: 20px;
+        font-family: "Times New Roman", Times, serif;
+    }
+    .inst-header h2 { font-size: 18px; font-weight: bold; margin: 0; line-height: 1.2; }
+    .inst-header h3 { font-size: 16px; font-weight: bold; margin: 0; line-height: 1.2; }
+    .inst-header h4 { font-size: 14px; font-weight: normal; margin: 5px 0 0 0; }
+
+    .inst-info-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 15px;
+        font-size: 11px;
+        font-weight: bold;
+    }
+    .inst-info-table td { padding: 4px 8px; }
+    
+    /* ---------------- MAIN SCHEDULE GRID ---------------- */
+    .inst-grid {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 11px;
+        border: 2px solid #000;
+        table-layout: fixed;
+        background: #fff;
+    }
+    .inst-grid th, .inst-grid td {
+        border: 1px solid #000;
+        text-align: center;
+        vertical-align: middle;
+        padding: 4px;
+    }
+    .inst-grid th {
+        font-weight: bold;
+        text-transform: uppercase;
+        padding: 8px 4px;
+    }
+    .inst-grid .time-col {
+        width: 80px;
+        font-weight: normal;
+        font-size: 10px;
+    }
+    
+    .cell-wrap { position: relative; width: 100%; height: 100%; min-height: 60px; display: flex; flex-direction: column; justify-content: center; align-items: center;}
+    
+    .bg-green { background-color: #dcedc8 !important; color: #000; } 
+    .bg-blue { background-color: #e3f2fd !important; color: #000; } 
+    .bg-yellow { background-color: #fff9c4 !important; color: #000; } 
+    @media print {
+        .bg-green { background-color: #dcedc8 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+        .bg-blue { background-color: #e3f2fd !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+        .bg-yellow { background-color: #fff9c4 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    }
+
+    .subj-name { font-weight: bold; text-transform: uppercase; font-size: 11px; line-height: 1.2; margin-bottom: 4px; }
+    .subj-teacher { font-style: italic; font-size: 10px; line-height: 1.1; margin-bottom: 2px; }
+    .subj-room { font-style: italic; font-size: 10px; line-height: 1.1; }
+
+    /* Receso */
+    .row-receso td { font-weight: bold; font-size: 11px; padding: 6px; }
+
+    /* ---------------- FOOTER / SUMMARY ---------------- */
+    .inst-footer {
+        margin-top: 15px;
+        display: flex;
+        gap: 15px;
+        align-items: flex-start;
+        background: #fff;
+    }
+    .inst-summary {
+        flex: 1;
+        border-collapse: collapse;
+        font-size: 10px;
+        border: 2px solid #000;
+    }
+    .inst-summary th, .inst-summary td {
+        border: 1px solid #000;
+        padding: 4px;
+        text-align: center;
+    }
+    .inst-summary th { font-weight: bold; }
+    .inst-summary td.text-left { text-align: left; padding-left: 8px; }
+
+    .inst-signatures {
+        width: 350px;
+        font-size: 10px;
+        background: #fff;
+    }
+    .sig-date {
+        border: 1px solid #000;
+        text-align: center;
+        padding: 4px;
+        font-weight: bold;
+        margin-bottom: 30px;
+        width: 150px;
+        margin-left: auto;
+    }
+    .sig-date-box { border-top: 1px solid #000; height: 15px; margin-top: 5px; }
+    .sig-lines {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 40px;
+    }
+    .sig-line {
+        border-top: 1px solid #000;
+        padding-top: 4px;
+        text-align: center;
+        width: 30%;
     }
   </style>
 </head>
@@ -146,108 +260,160 @@
 <!-- END: Header & Filters -->
 <!-- BEGIN: Schedule Grid -->
 <div class="flex-1 overflow-auto p-6" data-purpose="main-schedule-container">
-<div class="min-w-[1000px] bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
-<table class="w-full border-collapse">
-<thead>
-<tr class="bg-slate-50 border-b border-slate-200">
-<th class="py-4 px-4 text-xs font-bold text-slate-500 uppercase text-center border-r border-slate-200 w-24">Horario</th>
-<th class="py-4 px-2 text-xs font-bold text-slate-700 uppercase text-center border-r border-slate-200">Lunes</th>
-<th class="py-4 px-2 text-xs font-bold text-slate-700 uppercase text-center border-r border-slate-200">Martes</th>
-<th class="py-4 px-2 text-xs font-bold text-slate-700 uppercase text-center border-r border-slate-200">Miércoles</th>
-<th class="py-4 px-2 text-xs font-bold text-slate-700 uppercase text-center border-r border-slate-200">Jueves</th>
-<th class="py-4 px-2 text-xs font-bold text-slate-700 uppercase text-center border-r border-slate-200">Viernes</th>
-<th class="py-4 px-2 text-xs font-bold text-slate-700 uppercase text-center">Sábado</th>
-</tr>
-</thead>
-<tbody>
-@foreach($timeSlots as $timeKey => $timeLabel)
-    @if($loop->index == 2 && count($timeSlots) >= 4)
-        <!-- Recess Slot -->
-        <tr class="border-b border-slate-200 bg-slate-100/50 h-10">
-        <td class="bg-slate-100 text-center text-[10px] font-bold text-slate-400 border-r border-slate-200">RECESO</td>
-        <td class="text-center text-[10px] font-bold text-slate-400 uppercase tracking-widest" colspan="6">RECESO</td>
-        </tr>
-    @endif
-    <tr class="border-b border-slate-200 h-24">
-    <td class="bg-slate-50 text-center text-xs font-medium text-slate-500 border-r border-slate-200">{{ $timeLabel }}</td>
-    @foreach($days as $day)
+
+    @if(!$career_id || !$course_id || !$turn_id)
+        <div style="padding: 40px; text-align: center; color: #6b7280; background: #fff; border-radius: 12px; border: 1px solid #e5e7eb;">
+            Seleccione una Carrera, Curso y Turno para ver el horario en formato institucional.
+        </div>
+    @else
         @php
-            $sch = $grid[$timeKey][$day] ?? null;
+            $subjectColors = [];
+            $colorClasses = ['bg-green', 'bg-blue', 'bg-yellow'];
+            $colorIdx = 0;
+
+            foreach($grid as $timeKey => $daysGrid) {
+                foreach($daysGrid as $sch) {
+                    if ($sch && !isset($subjectColors[$sch->subject_id])) {
+                        $subjectColors[$sch->subject_id] = $colorClasses[$colorIdx % 3];
+                        $colorIdx++;
+                    }
+                }
+            }
         @endphp
-        <td class="p-1 border-r border-slate-200">
-        @if($sch)
-            <div class="h-full bg-blue-100 border-l-4 border-blue-500 p-2 rounded flex flex-col justify-center text-center">
-            <span class="text-[10px] font-bold text-blue-800 uppercase leading-tight">{{ $sch->subject->name }}</span>
-            <span class="text-[9px] italic text-blue-700">{{ $sch->teacher->name }}</span>
-            <span class="text-[9px] font-semibold text-blue-900 mt-1">SALA {{ $sch->classroom->name }}</span>
+
+        <!-- INSTITUTIONAL HEADER -->
+        <div class="inst-header bg-white pt-6 pb-2 px-6 shadow-sm border border-b-0 border-slate-200">
+            <h2>UNIVERSIDAD AUTÓNOMA DE ENCARNACIÓN</h2>
+            <h3>FACULTAD DE CIENCIA, ARTE Y TECNOLOGÍA</h3>
+            <h4>HORARIO DE CLASES</h4>
+        </div>
+
+        <div class="bg-white px-6 pb-6 shadow-sm border border-t-0 border-slate-200">
+            <table class="inst-info-table">
+                <tr>
+                    <td style="width:50%">CARRERA: <span style="font-weight:normal; font-style:italic;">{{ mb_strtoupper($careerName) }}</span></td>
+                    <td style="width:25%">TURNO: <span style="font-weight:normal; font-style:italic;">NOCHE</span></td>
+                    <td style="width:25%">AÑO: <span style="font-weight:normal; font-style:italic;">{{ date('Y') }}</span></td>
+                </tr>
+                <tr>
+                    @php
+                        $courseObj = \App\Models\Course::find($course_id);
+                        $courseName = $courseObj->name ?? '';
+                        $coursePeriod = $courseObj->period ?? '';
+                    @endphp
+                    <td>CURSO: <span style="font-weight:normal; font-style:italic;">{{ mb_strtoupper($courseName) }}</span></td>
+                    <td colspan="2">SEMESTRE: <span style="font-weight:normal; font-style:italic;">{{ mb_strtoupper($coursePeriod) }}</span></td>
+                </tr>
+            </table>
+
+            <!-- MAIN SCHEDULE GRID -->
+            <table class="inst-grid">
+                <thead>
+                    <tr>
+                        <th class="time-col">HORARIO</th>
+                        @foreach($days as $day)
+                            <th>{{ mb_strtoupper($day) }}</th>
+                        @endforeach
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach($timeSlots as $timeKey => $timeLabel)
+                        @if($loop->index == 2 && count($timeSlots) >= 4)
+                            <tr class="row-receso">
+                                <td class="time-col">19:50-20:00</td>
+                                @foreach($days as $day)
+                                    <td>RECESO</td>
+                                @endforeach
+                            </tr>
+                        @endif
+                        <tr>
+                            <td class="time-col">{{ $timeLabel }}</td>
+                            @foreach($days as $day)
+                                @php
+                                    $sch = $grid[$timeKey][$day] ?? null;
+                                @endphp
+                                @if($sch)
+                                    @php
+                                        $bgColorClass = $subjectColors[$sch->subject_id] ?? '';
+                                    @endphp
+                                    <td class="{{ $bgColorClass }}">
+                                        <div class="cell-wrap has-content">
+                                            <div class="subj-name">{{ mb_strtoupper($sch->subject?->name ?? 'MATERIA') }}</div>
+                                            <div class="subj-teacher">{{ mb_strtoupper($sch->teacher?->name ?? 'DOCENTE') }}</div>
+                                            <div class="subj-room">SALA {{ mb_strtoupper($sch->classroom?->name ?? 'N/A') }}</div>
+                                        </div>
+                                    </td>
+                                @else
+                                    <td>
+                                        <div class="cell-wrap"></div>
+                                    </td>
+                                @endif
+                            @endforeach
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+
+            <!-- FOOTER / SUMMARY -->
+            <div class="inst-footer">
+                <table class="inst-summary">
+                    <thead>
+                        <tr>
+                            <th style="width:15%">FACULTAD</th>
+                            <th style="width:15%">ACTA</th>
+                            <th style="width:45%">Resumen Semanal de Materias</th>
+                            <th style="width:10%">T.Horas</th>
+                            <th style="width:15%">Observaciones<br><span style="font-size:7px;font-weight:normal">(Consignar clases combinadas)</span></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @forelse($subjectsSummary as $subjectId => $subject)
+                            <tr>
+                                @php
+                                    $fac = \App\Models\Subject::find($subjectId)->faculty ?? null;
+                                    $facName = $fac ? $fac->name : 'FACAT';
+                                @endphp
+                                <td style="font-style:italic;">{{ mb_strtoupper($facName) }}</td>
+                                <td>{{ mb_strtoupper($subject['identifier'] ?? '-') }}</td>
+                                <td class="text-left">{{ mb_convert_case($subject['name'], MB_CASE_TITLE, "UTF-8") }}</td>
+                                <td>{{ $subject['hours'] }}</td>
+                                <td></td>
+                            </tr>
+                        @empty
+                            <tr>
+                                <td colspan="5" style="padding: 10px; color: #999;">Agregue clases al horario para generar el resumen.</td>
+                            </tr>
+                        @endforelse
+                    </tbody>
+                </table>
+
+                <div class="inst-signatures">
+                    <div class="sig-date">
+                        Fecha de Aprobación:<br>
+                        <span style="font-weight:normal;">{{ \App\Models\Setting::where('key', 'approval_date')->value('value') ?? '___/___/2026' }}</span>
+                        <div class="sig-date-box"></div>
+                    </div>
+                    <div class="sig-lines">
+                        <div class="sig-line" style="position: relative;">
+                            @php $secSig = \App\Models\Setting::where('key', 'secretary_signature')->value('value'); @endphp
+                            @if($secSig)<img src="{{ asset('storage/' . $secSig) }}" style="position:absolute; bottom:100%; margin-bottom:-15px; left:50%; transform:translateX(-50%); max-height:60px; max-width:140px; object-fit:contain; z-index:10; mix-blend-mode:multiply;" alt="">@endif
+                            Secretario/a<br><span style="font-size:8px;font-weight:normal;">{{ \App\Models\Setting::where('key', 'secretary_name')->value('value') ?? 'Lic. Jéssica Ibáñez' }}</span>
+                        </div>
+                        <div class="sig-line" style="position: relative;">
+                            @php $dirSig = \App\Models\Setting::where('key', 'director_signature')->value('value'); @endphp
+                            @if($dirSig)<img src="{{ asset('storage/' . $dirSig) }}" style="position:absolute; bottom:100%; margin-bottom:-15px; left:50%; transform:translateX(-50%); max-height:60px; max-width:140px; object-fit:contain; z-index:10; mix-blend-mode:multiply;" alt="">@endif
+                            Decano/Director<br><span style="font-size:8px;font-weight:normal;">{{ \App\Models\Setting::where('key', 'director_name')->value('value') ?? 'Mgtr. Gabriel Sotelo' }}</span>
+                        </div>
+                        <div class="sig-line" style="position: relative;">
+                            @php $acadSig = \App\Models\Setting::where('key', 'academic_director_signature')->value('value'); @endphp
+                            @if($acadSig)<img src="{{ asset('storage/' . $acadSig) }}" style="position:absolute; bottom:100%; margin-bottom:-15px; left:50%; transform:translateX(-50%); max-height:60px; max-width:140px; object-fit:contain; z-index:10; mix-blend-mode:multiply;" alt="">@endif
+                            Directora Académica General<br><span style="font-size:8px;font-weight:normal;">{{ \App\Models\Setting::where('key', 'academic_director_name')->value('value') ?? 'Dra. Laura Arévalos' }}</span>
+                        </div>
+                    </div>
+                </div>
             </div>
-        @else
-            <div class="h-full"></div>
-        @endif
-        </td>
-    @endforeach
-    </tr>
-@endforeach
-</tbody>
-</table>
-</div>
-<!-- BEGIN: Footer Details -->
-<div class="mt-8 grid grid-cols-1 lg:grid-cols-2 gap-8" data-purpose="summary-and-signatures">
-<!-- Materias Summary -->
-<div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
-<h3 class="text-sm font-bold text-slate-800 mb-4 border-b pb-2 uppercase tracking-wide">Resumen Semanal de Materias</h3>
-<table class="w-full text-xs text-left">
-<thead>
-<tr class="text-slate-500 font-semibold border-b border-slate-100">
-<th class="py-2">
-        Acta
-      </th>
-<th class="py-2">Materia</th>
-<th class="py-2 text-center">Horas</th>
-</tr>
-</thead>
-<tbody class="divide-y divide-slate-100">
-@forelse($subjectsSummary as $subject)
-<tr>
-    <td class="py-2">{{ $subject['identifier'] ?? '-' }}</td>
-    <td class="py-2">{{ $subject['name'] }}</td>
-    <td class="py-2 text-center">{{ $subject['hours'] }}</td>
-</tr>
-@empty
-<tr>
-    <td class="py-2 text-center text-slate-500 italic" colspan="3">Seleccione una carrera, curso y turno para ver el resumen.</td>
-</tr>
-@endforelse
-</tbody>
-</table>
-</div>
-<!-- Signatures Section -->
-<div class="flex flex-col justify-end">
-<div class="grid grid-cols-3 gap-4 text-center">
-<div class="flex flex-col items-center">
-<div class="w-32 border-b border-slate-300 mb-2 mt-12"></div>
-<p class="text-[10px] font-semibold text-slate-700">Secretaria</p>
-<p class="text-[9px] text-slate-500">Lic. Jéssica Ibáñez</p>
-</div>
-<div class="flex flex-col items-center">
-<div class="w-32 border-b border-slate-300 mb-2 mt-12"></div>
-<p class="text-[10px] font-semibold text-slate-700">Director</p>
-<p class="text-[9px] text-slate-500">Mgtr. Gabriel Sotelo</p>
-</div>
-<div class="flex flex-col items-center">
-<div class="w-32 border-b border-slate-300 mb-2 mt-12"></div>
-<p class="text-[10px] font-semibold text-slate-700">Directora Académica General</p>
-<p class="text-[9px] text-slate-500">Dra. Laura Arévalos</p>
-</div>
-</div>
-<div class="mt-8 text-right">
-<div class="inline-block p-2 border border-slate-200 rounded text-[10px] text-slate-400">
-               Fecha de Aprobación: <span class="ml-4">___/___/2026</span>
-</div>
-</div>
-</div>
-</div>
-<!-- END: Footer Details -->
+        </div>
+    @endif
 </div>
 <!-- END: Schedule Grid -->
 </main>

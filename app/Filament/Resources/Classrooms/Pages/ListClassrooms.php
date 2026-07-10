@@ -14,8 +14,7 @@ class ListClassrooms extends ListRecords
     {
         return [
             CreateAction::make()
-                ->label('Crear Sala')
-                ->color('warning'),
+                ->label('Nueva Sala'),
         ];
     }
 
